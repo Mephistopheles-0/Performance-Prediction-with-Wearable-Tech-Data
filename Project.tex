@@ -1,0 +1,919 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Exercise Performance Prediction with Wearable Tech Data},
+  pdfauthor={Ayoub HAIDA},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exercise Performance Prediction with Wearable Tech Data}
+\author{Ayoub HAIDA}
+\date{2023-12-20}
+
+\begin{document}
+\maketitle
+
+\hypertarget{background}{%
+\subsection{Background}\label{background}}
+
+With the increasing prevalence of wearable devices like Jawbone Up, Nike
+FuelBand, and Fitbit, the quantified self movement has gained momentum.
+This community of enthusiasts regularly collects personal activity data
+to enhance health, uncover behavioral patterns, or simply indulge their
+tech-savvy interests. While individuals often quantify the quantity of
+their activities, the evaluation of performance quality is frequently
+overlooked. In this project, our objective is to analyze data from
+accelerometers placed on the belt, forearm, arm, and dumbbell of six
+participants. These individuals were tasked with executing barbell
+lifts, both correctly and incorrectly, in five distinct manners.
+Detailed information is accessible on the website:
+\url{http://groupware.les.inf.puc-rio.br/har} (refer to the Weight
+Lifting Exercise Dataset section).
+
+\hypertarget{the-data}{%
+\subsection{The Data}\label{the-data}}
+
+The training and testing data for this project are available here:
+
+\begin{itemize}
+\item
+  Training Data :
+  \url{https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv}.
+\item
+  Testing Data :
+  \url{https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv}.
+\end{itemize}
+
+The data for this project come from this source:
+\url{http://groupware.les.inf.puc-rio.br/har}.\\
+\strut \\
+
+\hypertarget{loading-packages-and-datasets}{%
+\section{Loading Packages and
+Datasets}\label{loading-packages-and-datasets}}
+
+\hypertarget{load-necessary-libraries}{%
+\subsection{Load necessary libraries}\label{load-necessary-libraries}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(data.table)}
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(parallel)}
+\FunctionTok{library}\NormalTok{(doParallel)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: foreach
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: iterators
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(visdat)}
+\FunctionTok{library}\NormalTok{(purrr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'purrr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:foreach':
+## 
+##     accumulate, when
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:caret':
+## 
+##     lift
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:data.table':
+## 
+##     transpose
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:data.table':
+## 
+##     between, first, last
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(printr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'printr':
+##   method                from     
+##   knit_print.data.frame rmarkdown
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.92 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'kableExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(gbm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loaded gbm 2.1.8.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(e1071)}
+\FunctionTok{library}\NormalTok{(randomForest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## randomForest 4.7-1.1
+\end{verbatim}
+
+\begin{verbatim}
+## Type rfNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'randomForest'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     margin
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(forecast)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'quantmod':
+##   method            from
+##   as.zoo.data.frame zoo
+\end{verbatim}
+
+\hypertarget{check-and-load-required-libraries-quietly.}{%
+\subsection{Check and load required libraries
+quietly.}\label{check-and-load-required-libraries-quietly.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{required\_libraries }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"data.table"}\NormalTok{, }\StringTok{"caret"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"parallel"}\NormalTok{,}\StringTok{"doParallel"}\NormalTok{,}
+                        \StringTok{"visdat"}\NormalTok{, }\StringTok{"purrr"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{, }\StringTok{"printr"}\NormalTok{,}\StringTok{"corrplot"}\NormalTok{,}
+                        \StringTok{"kableExtra"}\NormalTok{, }\StringTok{"gbm"}\NormalTok{, }\StringTok{"e1071"}\NormalTok{, }\StringTok{"randomForest"}\NormalTok{,}\StringTok{"forecast"}\NormalTok{)}
+\NormalTok{library\_check }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(required\_libraries, require, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{, }
+                        \AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{create-a-data-directory-if-it-doesnt-exist}{%
+\subsection{Create a data directory if it doesn't
+exist}\label{create-a-data-directory-if-it-doesnt-exist}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{file.exists}\NormalTok{(}\StringTok{"./data"}\NormalTok{)) \{}
+  \FunctionTok{dir.create}\NormalTok{(}\StringTok{"./data"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{define-the-working-directory-and-the-url-for-the-datasets}{%
+\subsection{Define the working directory and the URL for the
+datasets}\label{define-the-working-directory-and-the-url-for-the-datasets}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{trainURL }\OtherTok{\textless{}{-}} \StringTok{"https://d396qusza40orc.cloudfront.net/predmachlearn/pml{-}training.csv"}
+\NormalTok{testURL }\OtherTok{\textless{}{-}} \StringTok{"https://d396qusza40orc.cloudfront.net/predmachlearn/pml{-}testing.csv"}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{download-the-datasets}{%
+\subsection{Download the datasets}\label{download-the-datasets}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# download.file(trainURL, file.path(path, "pml{-}training.csv"))}
+\CommentTok{\# download.file(testURL, file.path(path, "pml{-}testing.csv"))}
+
+\NormalTok{trainData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./data/pml{-}training.csv"}\NormalTok{)}
+\NormalTok{testData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./data/pml{-}testing.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+First look at the data for each column and remove variables unrelated
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(trainData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    19622 obs. of  160 variables:
+##  $ X                       : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ user_name               : chr  "carlitos" "carlitos" "carlitos" "carlitos" ...
+##  $ raw_timestamp_part_1    : int  1323084231 1323084231 1323084231 1323084232 1323084232 1323084232 1323084232 1323084232 1323084232 1323084232 ...
+##  $ raw_timestamp_part_2    : int  788290 808298 820366 120339 196328 304277 368296 440390 484323 484434 ...
+##  $ cvtd_timestamp          : chr  "05/12/2011 11:23" "05/12/2011 11:23" "05/12/2011 11:23" "05/12/2011 11:23" ...
+##  $ new_window              : chr  "no" "no" "no" "no" ...
+##  $ num_window              : int  11 11 11 12 12 12 12 12 12 12 ...
+##  $ roll_belt               : num  1.41 1.41 1.42 1.48 1.48 1.45 1.42 1.42 1.43 1.45 ...
+##  $ pitch_belt              : num  8.07 8.07 8.07 8.05 8.07 8.06 8.09 8.13 8.16 8.17 ...
+##  $ yaw_belt                : num  -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 ...
+##  $ total_accel_belt        : int  3 3 3 3 3 3 3 3 3 3 ...
+##  $ kurtosis_roll_belt      : chr  "" "" "" "" ...
+##  $ kurtosis_picth_belt     : chr  "" "" "" "" ...
+##  $ kurtosis_yaw_belt       : chr  "" "" "" "" ...
+##  $ skewness_roll_belt      : chr  "" "" "" "" ...
+##  $ skewness_roll_belt.1    : chr  "" "" "" "" ...
+##  $ skewness_yaw_belt       : chr  "" "" "" "" ...
+##  $ max_roll_belt           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_picth_belt          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_yaw_belt            : chr  "" "" "" "" ...
+##  $ min_roll_belt           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_pitch_belt          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_yaw_belt            : chr  "" "" "" "" ...
+##  $ amplitude_roll_belt     : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ amplitude_pitch_belt    : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ amplitude_yaw_belt      : chr  "" "" "" "" ...
+##  $ var_total_accel_belt    : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_roll_belt           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_roll_belt        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_roll_belt           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_pitch_belt          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_pitch_belt       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_pitch_belt          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_yaw_belt            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_yaw_belt         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_yaw_belt            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ gyros_belt_x            : num  0 0.02 0 0.02 0.02 0.02 0.02 0.02 0.02 0.03 ...
+##  $ gyros_belt_y            : num  0 0 0 0 0.02 0 0 0 0 0 ...
+##  $ gyros_belt_z            : num  -0.02 -0.02 -0.02 -0.03 -0.02 -0.02 -0.02 -0.02 -0.02 0 ...
+##  $ accel_belt_x            : int  -21 -22 -20 -22 -21 -21 -22 -22 -20 -21 ...
+##  $ accel_belt_y            : int  4 4 5 3 2 4 3 4 2 4 ...
+##  $ accel_belt_z            : int  22 22 23 21 24 21 21 21 24 22 ...
+##  $ magnet_belt_x           : int  -3 -7 -2 -6 -6 0 -4 -2 1 -3 ...
+##  $ magnet_belt_y           : int  599 608 600 604 600 603 599 603 602 609 ...
+##  $ magnet_belt_z           : int  -313 -311 -305 -310 -302 -312 -311 -313 -312 -308 ...
+##  $ roll_arm                : num  -128 -128 -128 -128 -128 -128 -128 -128 -128 -128 ...
+##  $ pitch_arm               : num  22.5 22.5 22.5 22.1 22.1 22 21.9 21.8 21.7 21.6 ...
+##  $ yaw_arm                 : num  -161 -161 -161 -161 -161 -161 -161 -161 -161 -161 ...
+##  $ total_accel_arm         : int  34 34 34 34 34 34 34 34 34 34 ...
+##  $ var_accel_arm           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_roll_arm            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_roll_arm         : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_roll_arm            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_pitch_arm           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_pitch_arm        : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_pitch_arm           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ avg_yaw_arm             : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ stddev_yaw_arm          : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ var_yaw_arm             : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ gyros_arm_x             : num  0 0.02 0.02 0.02 0 0.02 0 0.02 0.02 0.02 ...
+##  $ gyros_arm_y             : num  0 -0.02 -0.02 -0.03 -0.03 -0.03 -0.03 -0.02 -0.03 -0.03 ...
+##  $ gyros_arm_z             : num  -0.02 -0.02 -0.02 0.02 0 0 0 0 -0.02 -0.02 ...
+##  $ accel_arm_x             : int  -288 -290 -289 -289 -289 -289 -289 -289 -288 -288 ...
+##  $ accel_arm_y             : int  109 110 110 111 111 111 111 111 109 110 ...
+##  $ accel_arm_z             : int  -123 -125 -126 -123 -123 -122 -125 -124 -122 -124 ...
+##  $ magnet_arm_x            : int  -368 -369 -368 -372 -374 -369 -373 -372 -369 -376 ...
+##  $ magnet_arm_y            : int  337 337 344 344 337 342 336 338 341 334 ...
+##  $ magnet_arm_z            : int  516 513 513 512 506 513 509 510 518 516 ...
+##  $ kurtosis_roll_arm       : chr  "" "" "" "" ...
+##  $ kurtosis_picth_arm      : chr  "" "" "" "" ...
+##  $ kurtosis_yaw_arm        : chr  "" "" "" "" ...
+##  $ skewness_roll_arm       : chr  "" "" "" "" ...
+##  $ skewness_pitch_arm      : chr  "" "" "" "" ...
+##  $ skewness_yaw_arm        : chr  "" "" "" "" ...
+##  $ max_roll_arm            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_picth_arm           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_yaw_arm             : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_roll_arm            : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_pitch_arm           : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_yaw_arm             : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ amplitude_roll_arm      : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ amplitude_pitch_arm     : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ amplitude_yaw_arm       : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ roll_dumbbell           : num  13.1 13.1 12.9 13.4 13.4 ...
+##  $ pitch_dumbbell          : num  -70.5 -70.6 -70.3 -70.4 -70.4 ...
+##  $ yaw_dumbbell            : num  -84.9 -84.7 -85.1 -84.9 -84.9 ...
+##  $ kurtosis_roll_dumbbell  : chr  "" "" "" "" ...
+##  $ kurtosis_picth_dumbbell : chr  "" "" "" "" ...
+##  $ kurtosis_yaw_dumbbell   : chr  "" "" "" "" ...
+##  $ skewness_roll_dumbbell  : chr  "" "" "" "" ...
+##  $ skewness_pitch_dumbbell : chr  "" "" "" "" ...
+##  $ skewness_yaw_dumbbell   : chr  "" "" "" "" ...
+##  $ max_roll_dumbbell       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_picth_dumbbell      : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ max_yaw_dumbbell        : chr  "" "" "" "" ...
+##  $ min_roll_dumbbell       : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_pitch_dumbbell      : num  NA NA NA NA NA NA NA NA NA NA ...
+##  $ min_yaw_dumbbell        : chr  "" "" "" "" ...
+##  $ amplitude_roll_dumbbell : num  NA NA NA NA NA NA NA NA NA NA ...
+##   [list output truncated]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# subset the datasets}
+\NormalTok{trainData }\OtherTok{\textless{}{-}}\NormalTok{ trainData[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{)]}
+\NormalTok{testData }\OtherTok{\textless{}{-}}\NormalTok{ testData[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+Let's explore the dimensions of the underlying dataset
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# dimensions of the data}
+\FunctionTok{rbind}\NormalTok{(}\AttributeTok{training =} \FunctionTok{dim}\NormalTok{(trainData),}
+      \AttributeTok{testing =} \FunctionTok{dim}\NormalTok{(testData))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r}
+\hline
+training & 19622 & 153\\
+\hline
+testing & 20 & 153\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2023}\NormalTok{)}
+\NormalTok{inTrain }\OtherTok{\textless{}{-}} \FunctionTok{createDataPartition}\NormalTok{(}\AttributeTok{y =}\NormalTok{ trainData}\SpecialCharTok{$}\NormalTok{classe, }\AttributeTok{p =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{list =}\NormalTok{ F)}
+\NormalTok{training }\OtherTok{\textless{}{-}}\NormalTok{ trainData[inTrain, ]}
+\NormalTok{testing }\OtherTok{\textless{}{-}}\NormalTok{ trainData[}\SpecialCharTok{{-}}\NormalTok{inTrain, ]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{remove-the-variables-with-a-lot-of-similarities}{%
+\subsubsection{Remove the variables with a lot of
+similarities}\label{remove-the-variables-with-a-lot-of-similarities}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nzv }\OtherTok{\textless{}{-}} \FunctionTok{nearZeroVar}\NormalTok{(trainData, }\AttributeTok{saveMetrics =}\NormalTok{ T)}
+\NormalTok{keepFeat }\OtherTok{\textless{}{-}} \FunctionTok{row.names}\NormalTok{(nzv[nzv}\SpecialCharTok{$}\NormalTok{nzv }\SpecialCharTok{==} \ConstantTok{FALSE}\NormalTok{, ])}
+\NormalTok{training }\OtherTok{\textless{}{-}}\NormalTok{ training[, keepFeat]}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{remove-the-variables-with-all-nas}{%
+\subsubsection{Remove the variables with all
+NAs}\label{remove-the-variables-with-all-nas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training }\OtherTok{\textless{}{-}}\NormalTok{ training[, }\FunctionTok{colSums}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(training)) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{]}
+\FunctionTok{dim}\NormalTok{(training)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 13737    53
+\end{verbatim}
+
+\hypertarget{correlation}{%
+\subsubsection{Correlation}\label{correlation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{corr\_data }\OtherTok{\textless{}{-}} \FunctionTok{select\_if}\NormalTok{(training, is.numeric)}
+\FunctionTok{corrplot}\NormalTok{(}
+  \FunctionTok{cor}\NormalTok{(corr\_data),}
+  \AttributeTok{method =} \StringTok{"color"}\NormalTok{,}
+  \AttributeTok{tl.pos =} \StringTok{"n"}\NormalTok{,}
+  \AttributeTok{insig =} \StringTok{"blank"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\hypertarget{model-training}{%
+\subsection{Model Training}\label{model-training}}
+
+\hypertarget{set-up-5-fold-cross-validation-for-training}{%
+\subsubsection{Set up 5-fold cross validation for
+training}\label{set-up-5-fold-cross-validation-for-training}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modCtl }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{\textquotesingle{}cv\textquotesingle{}}\NormalTok{, }\AttributeTok{number =} \DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{fit-a-model-with-random-forests}{%
+\subsubsection{Fit a model with random
+forests}\label{fit-a-model-with-random-forests}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2024}\NormalTok{)}
+\CommentTok{\#modRf \textless{}{-} train(classe \textasciitilde{}. , data = training, method = \textquotesingle{}rf\textquotesingle{}, trControl = modCtl)}
+\CommentTok{\#saveRDS(modRf,file="modRf.rds")}
+
+\NormalTok{modRf }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\AttributeTok{file =} \StringTok{"modRf.rds"}\NormalTok{)}
+\NormalTok{modRf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Random Forest 
+## 
+## 13737 samples
+##    52 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 10990, 10988, 10990, 10990, 10990 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.9907548  0.9883032
+##   27    0.9909732  0.9885806
+##   52    0.9848583  0.9808446
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 27.
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Read the summary of the model built with random forests
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modRf}\SpecialCharTok{$}\NormalTok{finalModel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+##  randomForest(x = x, y = y, mtry = param$mtry) 
+##                Type of random forest: classification
+##                      Number of trees: 500
+## No. of variables tried at each split: 27
+## 
+##         OOB estimate of  error rate: 0.67%
+## Confusion matrix:
+##      A    B    C    D    E class.error
+## A 3901    3    2    0    0 0.001280082
+## B   23 2630    5    0    0 0.010534236
+## C    0   11 2376    9    0 0.008347245
+## D    0    1   25 2223    3 0.012877442
+## E    0    2    4    4 2515 0.003960396
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Plot the Losses.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(modRf}\SpecialCharTok{$}\NormalTok{finalModel)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  List the important features (Top 10)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{importance }\OtherTok{\textless{}{-}} \FunctionTok{varImp}\NormalTok{(modRf, }\AttributeTok{scale =} \ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(importance, }\AttributeTok{top=}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Project_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Predict with the validation set and check the confusion matrix and
+  accuracy
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred.rf }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modRf, testing)}
+\NormalTok{testing}\SpecialCharTok{$}\NormalTok{classe }\OtherTok{\textless{}{-}} \FunctionTok{factor}\NormalTok{(testing}\SpecialCharTok{$}\NormalTok{classe, }\AttributeTok{levels =} 
+                           \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"E"}\NormalTok{))}
+\FunctionTok{confusionMatrix}\NormalTok{(pred.rf, testing}\SpecialCharTok{$}\NormalTok{classe)}\SpecialCharTok{$}\NormalTok{table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+  & A & B & C & D & E\\
+\hline
+A & 1671 & 5 & 0 & 0 & 0\\
+\hline
+B & 2 & 1133 & 3 & 1 & 1\\
+\hline
+C & 0 & 1 & 1021 & 8 & 2\\
+\hline
+D & 0 & 0 & 2 & 951 & 0\\
+\hline
+E & 1 & 0 & 0 & 4 & 1079\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{confusionMatrix}\NormalTok{(pred.rf, testing}\SpecialCharTok{$}\NormalTok{classe)}\SpecialCharTok{$}\NormalTok{overall[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Accuracy 
+## 0.9949023
+\end{verbatim}
+
+The accuracy is \textasciitilde99.2\% under 5-fold cross validation .
+
+\hypertarget{fit-a-model-with-gradient-boosting-method.}{%
+\subsubsection{Fit a model with gradient boosting
+method.}\label{fit-a-model-with-gradient-boosting-method.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#modGbm \textless{}{-} train(classe \textasciitilde{}., data = training, method = \textquotesingle{}gbm\textquotesingle{}, trControl = modCtl, verbose = F)}
+\CommentTok{\#saveRDS(modGbm ,file="modGbm .rds")}
+
+\NormalTok{modGbm  }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\AttributeTok{file =} \StringTok{"modGbm .rds"}\NormalTok{)}
+\NormalTok{modGbm }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Stochastic Gradient Boosting 
+## 
+## 13737 samples
+##    52 predictor
+##     5 classes: 'A', 'B', 'C', 'D', 'E' 
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold) 
+## Summary of sample sizes: 10990, 10990, 10990, 10989, 10989 
+## Resampling results across tuning parameters:
+## 
+##   interaction.depth  n.trees  Accuracy   Kappa    
+##   1                   50      0.7567156  0.6915006
+##   1                  100      0.8199759  0.7721977
+##   1                  150      0.8519330  0.8126523
+##   2                   50      0.8543350  0.8154923
+##   2                  100      0.9066029  0.8817842
+##   2                  150      0.9320085  0.9139597
+##   3                   50      0.8951737  0.8672749
+##   3                  100      0.9429281  0.9277804
+##   3                  150      0.9606172  0.9501778
+## 
+## Tuning parameter 'shrinkage' was held constant at a value of 0.1
+## 
+## Tuning parameter 'n.minobsinnode' was held constant at a value of 10
+## Accuracy was used to select the optimal model using the largest value.
+## The final values used for the model were n.trees = 150, interaction.depth =
+##  3, shrinkage = 0.1 and n.minobsinnode = 10.
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Read the summary of the model built with gbm
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modGbm}\SpecialCharTok{$}\NormalTok{finalModel}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## A gradient boosted model with multinomial loss function.
+## 150 iterations were performed.
+## There were 52 predictors of which 52 had non-zero influence.
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Predict with the validation set and check the confusion matrix and
+  accuracy
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predGbm }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modGbm, }\AttributeTok{newdata =}\NormalTok{ testing)}
+\FunctionTok{confusionMatrix}\NormalTok{(predGbm, testing}\SpecialCharTok{$}\NormalTok{classe)}\SpecialCharTok{$}\NormalTok{table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+  & A & B & C & D & E\\
+\hline
+A & 1649 & 52 & 0 & 0 & 1\\
+\hline
+B & 14 & 1051 & 24 & 2 & 9\\
+\hline
+C & 9 & 35 & 988 & 32 & 11\\
+\hline
+D & 2 & 1 & 12 & 920 & 11\\
+\hline
+E & 0 & 0 & 2 & 10 & 1050\\
+\hline
+\end{tabular}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{confusionMatrix}\NormalTok{(predGbm, testing}\SpecialCharTok{$}\NormalTok{classe)}\SpecialCharTok{$}\NormalTok{overall[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  Accuracy 
+## 0.9614274
+\end{verbatim}
+
+The accuracy is \textasciitilde93.3\% under 5-fold cross validation .
+
+\hypertarget{test-the-two-models-on-the-new-test-dataset}{%
+\subsection{Test the two models on the new test
+dataset}\label{test-the-two-models-on-the-new-test-dataset}}
+
+\hypertarget{the-first-model-random-forest}{%
+\subsubsection{The first model (Random
+Forest)}\label{the-first-model-random-forest}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predRfTest }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modRf, }\AttributeTok{newdata =}\NormalTok{ testData)}
+\NormalTok{predRfTest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] B A B A A E D B A A B C B A E E A B B B
+## Levels: A B C D E
+\end{verbatim}
+
+\hypertarget{the-second-model-gradient-boosting-method}{%
+\subsubsection{The second model (Gradient Boosting
+Method)}\label{the-second-model-gradient-boosting-method}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{predGbmTest }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modGbm, }\AttributeTok{newdata =}\NormalTok{ testData)}
+\NormalTok{predGbmTest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] B A B A A E D B A A B C B A E E A B B B
+## Levels: A B C D E
+\end{verbatim}
+
+\hypertarget{comparison}{%
+\subsubsection{Comparison}\label{comparison}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(predRfTest, predGbmTest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r|r|r|r|r}
+\hline
+  & A & B & C & D & E\\
+\hline
+A & 7 & 0 & 0 & 0 & 0\\
+\hline
+B & 0 & 8 & 0 & 0 & 0\\
+\hline
+C & 0 & 0 & 1 & 0 & 0\\
+\hline
+D & 0 & 0 & 0 & 1 & 0\\
+\hline
+E & 0 & 0 & 0 & 0 & 3\\
+\hline
+\end{tabular}
+
+The two models produce almost the same results, as shown in the
+confusion matrix above.
+
+\end{document}

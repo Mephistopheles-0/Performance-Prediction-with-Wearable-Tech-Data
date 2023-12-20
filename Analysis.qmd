@@ -1,0 +1,238 @@
+---
+title: "Exercise Performance Prediction with Wearable Tech Data"
+author: "Ayoub HAIDA"
+date: "2023-12-20"
+output: pdf_document
+---
+
+## Background
+
+With the increasing prevalence of wearable devices like Jawbone Up, Nike FuelBand, and Fitbit, the quantified self movement has gained momentum. This community of enthusiasts regularly collects personal activity data to enhance health, uncover behavioral patterns, or simply indulge their tech-savvy interests. While individuals often quantify the quantity of their activities, the evaluation of performance quality is frequently overlooked. In this project, our objective is to analyze data from accelerometers placed on the belt, forearm, arm, and dumbbell of six participants. These individuals were tasked with executing barbell lifts, both correctly and incorrectly, in five distinct manners. Detailed information is accessible on the website: <http://groupware.les.inf.puc-rio.br/har> (refer to the Weight Lifting Exercise Dataset section).
+
+## The Data
+
+The training and testing data for this project are available here:
+
+-   Training Data : <https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv>.
+
+-   Testing Data : <https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv>.
+
+The data for this project come from this source: <http://groupware.les.inf.puc-rio.br/har>.\
+\
+
+# Loading Packages and Datasets
+
+## Load necessary libraries
+
+```{r Load Packages, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+library(data.table)
+library(caret)
+library(ggplot2)
+library(parallel)
+library(doParallel)
+library(visdat)
+library(purrr)
+library(dplyr)
+library(printr)
+library(corrplot)
+library(kableExtra)
+library(gbm)
+library(e1071)
+library(randomForest)
+library(forecast)
+```
+
+## Check and load required libraries quietly.
+
+```{r Check Packages, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+required_libraries <- c("data.table", "caret", "ggplot2", "parallel","doParallel",
+                        "visdat", "purrr", "dplyr", "printr","corrplot",
+                        "kableExtra", "gbm", "e1071", "randomForest","forecast")
+library_check <- sapply(required_libraries, require, character.only = TRUE, 
+                        quietly = TRUE)
+```
+
+## Create a data directory if it doesn't exist
+
+```{r Directory creation, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+if (!file.exists("./data")) {
+  dir.create("./data")
+}
+```
+
+## Define the working directory and the URL for the datasets
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+trainURL <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv"
+testURL <- "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv"
+```
+
+## Download the datasets
+
+```{r Datasets Download, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+# download.file(trainURL, file.path(path, "pml-training.csv"))
+# download.file(testURL, file.path(path, "pml-testing.csv"))
+
+trainData <- read.csv("./data/pml-training.csv")
+testData <- read.csv("./data/pml-testing.csv")
+```
+
+First look at the data for each column and remove variables unrelated
+
+```{r overview, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+str(trainData)
+```
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+# subset the datasets
+trainData <- trainData[, -c(1:7)]
+testData <- testData[, -c(1:7)]
+```
+
+Let's explore the dimensions of the underlying dataset
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+# dimensions of the data
+rbind(training = dim(trainData),
+      testing = dim(testData))
+```
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+set.seed(2023)
+inTrain <- createDataPartition(y = trainData$classe, p = 0.7, list = F)
+training <- trainData[inTrain, ]
+testing <- trainData[-inTrain, ]
+```
+
+### Remove the variables with a lot of similarities
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+nzv <- nearZeroVar(trainData, saveMetrics = T)
+keepFeat <- row.names(nzv[nzv$nzv == FALSE, ])
+training <- training[, keepFeat]
+```
+
+### Remove the variables with all NAs
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+training <- training[, colSums(is.na(training)) == 0]
+dim(training)
+```
+
+### Correlation
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+corr_data <- select_if(training, is.numeric)
+corrplot(
+  cor(corr_data),
+  method = "color",
+  tl.pos = "n",
+  insig = "blank"
+)
+```
+
+## Model Training
+
+### Set up 5-fold cross validation for training
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+modCtl <- trainControl(method = 'cv', number = 5)
+```
+
+### Fit a model with random forests
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+set.seed(2024)
+modRf <- train(classe ~. , data = training, method = 'rf', trControl = modCtl)
+saveRDS(modRf,file="modRf.rds")
+
+modRf <- readRDS(file = "modRf.rds")
+modRf
+```
+
+-   Read the summary of the model built with random forests
+
+```{r}
+modRf$finalModel
+```
+
+-   Plot the Losses.
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+plot(modRf$finalModel)
+```
+
+-   List the important features (Top 10)
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+importance <- varImp(modRf, scale = FALSE)
+plot(importance, top=10)
+```
+
+-   Predict with the validation set and check the confusion matrix and accuracy
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+pred.rf <- predict(modRf, testing)
+testing$classe <- factor(testing$classe, levels = 
+                           c("A", "B", "C", "D", "E"))
+confusionMatrix(pred.rf, testing$classe)$table
+```
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+confusionMatrix(pred.rf, testing$classe)$overall[1]
+```
+
+The accuracy is \~99.2% under 5-fold cross validation .
+
+### Fit a model with gradient boosting method.
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+modGbm <- train(classe ~., data = training, method = 'gbm', trControl = modCtl, verbose = F)
+saveRDS(modGbm ,file="modGbm .rds")
+
+modGbm  <- readRDS(file = "modGbm .rds")
+modGbm 
+```
+
+-   Read the summary of the model built with gbm
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+modGbm$finalModel
+```
+
+-   Predict with the validation set and check the confusion matrix and accuracy
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+predGbm <- predict(modGbm, newdata = testing)
+confusionMatrix(predGbm, testing$classe)$table
+```
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+confusionMatrix(predGbm, testing$classe)$overall[1]
+```
+
+The accuracy is \~93.3% under 5-fold cross validation .
+
+## Test the two models on the new test dataset
+
+### The first model (Random Forest)
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+predRfTest <- predict(modRf, newdata = testData)
+predRfTest
+```
+
+### The second model (Gradient Boosting Method)
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+predGbmTest <- predict(modGbm, newdata = testData)
+predGbmTest
+```
+
+### Comparison
+
+```{r echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+table(predRfTest, predGbmTest)
+```
+
+The two models produce almost the same results, as shown in the confusion matrix above.
